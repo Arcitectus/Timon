@@ -13,13 +13,13 @@ namespace SmartNet
 
 		private Thread smartThread;
 
-		public string Id => SmartHandle.ToString();
+		public string Id => SmartTargetHandle.ToString();
 
-		public bool Alive => SmartHandle != IntPtr.Zero;
+		public bool Alive => SmartTargetHandle != IntPtr.Zero;
 
 		public SmartRemote SmartRemote { get; private set; }
 
-		public IntPtr SmartHandle { get; private set; }
+		public IntPtr SmartTargetHandle { get; private set; }
 
 		public int Width { private set; get; } = 800;
 
@@ -44,19 +44,19 @@ namespace SmartNet
 				IntPtr handle = SmartRemote.PairClient(availableClient);
 				if (handle != IntPtr.Zero)
 				{
-					SmartHandle = handle;
+					SmartTargetHandle = handle;
 					break;
 				}
 			}
 
-			if (SmartHandle == IntPtr.Zero)
-				SmartHandle = SmartRemote.SpawnClient(settings.JavaPath, settings.SmartPath, url, "", Width, Height, null, null, null, null);
+			if (SmartTargetHandle == IntPtr.Zero)
+				SmartTargetHandle = SmartRemote.SpawnClient(settings.JavaPath, settings.SmartPath, url, "", Width, Height, null, null, null, null);
 
 			resetEvent.WaitOne();
 
-			SmartRemote.KillClient(SmartRemote.GetClientPID(SmartHandle));
+			SmartRemote.KillClient(SmartRemote.GetClientPID(SmartTargetHandle));
 
-			SmartHandle = IntPtr.Zero;
+			SmartTargetHandle = IntPtr.Zero;
 		}
 
 		public void Start()
