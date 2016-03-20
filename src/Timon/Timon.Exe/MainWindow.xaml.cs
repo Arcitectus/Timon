@@ -94,7 +94,7 @@ namespace Timon.Exe
 			TimerConstruct();
 		}
 
-		static string AssemblyDirectoryPath => Bib3.FCL.Glob.ZuProcessSelbsctMainModuleDirectoryPfaadBerecne().EnsureEndsWith(@"\");
+		static string AssemblyDirectoryPath => App.AssemblyDirectoryPath;
 
 		static public string ConfigFilePath =>
 			AssemblyDirectoryPath.PathToFilesysChild("config");
