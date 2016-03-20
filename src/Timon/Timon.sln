@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timon", "Timon\Timon.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartNet", "SmartNet\SmartNet.csproj", "{5C5DA07D-5223-4962-9721-A10AA867B660}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timon.Test.Exe", "Timon.Test.Exe\Timon.Test.Exe.csproj", "{D33C5E46-356F-4309-B0EA-5D51633F7FC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5C5DA07D-5223-4962-9721-A10AA867B660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C5DA07D-5223-4962-9721-A10AA867B660}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C5DA07D-5223-4962-9721-A10AA867B660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D33C5E46-356F-4309-B0EA-5D51633F7FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D33C5E46-356F-4309-B0EA-5D51633F7FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D33C5E46-356F-4309-B0EA-5D51633F7FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D33C5E46-356F-4309-B0EA-5D51633F7FC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
