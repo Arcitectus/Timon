@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartNet", "SmartNet\SmartN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timon.Test.Exe", "Timon.Test.Exe\Timon.Test.Exe.csproj", "{D33C5E46-356F-4309-B0EA-5D51633F7FC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timon.Exe", "Timon.Exe\Timon.Exe.csproj", "{B11BEB64-273B-4158-BE14-FFE3B7C8A595}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timon.UI", "Timon.UI\Timon.UI.csproj", "{FA16C87B-E64A-4438-8AE0-1FD674829AB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{D33C5E46-356F-4309-B0EA-5D51633F7FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D33C5E46-356F-4309-B0EA-5D51633F7FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D33C5E46-356F-4309-B0EA-5D51633F7FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B11BEB64-273B-4158-BE14-FFE3B7C8A595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B11BEB64-273B-4158-BE14-FFE3B7C8A595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B11BEB64-273B-4158-BE14-FFE3B7C8A595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B11BEB64-273B-4158-BE14-FFE3B7C8A595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA16C87B-E64A-4438-8AE0-1FD674829AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA16C87B-E64A-4438-8AE0-1FD674829AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA16C87B-E64A-4438-8AE0-1FD674829AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA16C87B-E64A-4438-8AE0-1FD674829AB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
