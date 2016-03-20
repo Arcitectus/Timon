@@ -10,14 +10,6 @@
         mc:Ignorable="d"
         Title="Timon" Height="444" Width="525">
     <Grid>
-        <TabControl>
-            <TabItem Header="Script">
-                <BotSharp.UI.Wpf:IDE
-                    Name="ScriptIDE"></BotSharp.UI.Wpf:IDE>
-            </TabItem>
-            <TabItem Header="Config">
-                <Timon.UI:ConfigView Name="ConfigView"></Timon.UI:ConfigView>
-            </TabItem>
-        </TabControl>
+        <Timon.UI:MainView Name="MainView"></Timon.UI:MainView>
     </Grid>
 </Window>

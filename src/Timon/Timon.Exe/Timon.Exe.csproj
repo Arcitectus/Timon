@@ -35,8 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bib3, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Bib3.dll</HintPath>
+    </Reference>
+    <Reference Include="Bib3.FCL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Bib3.FCL.dll</HintPath>
+    </Reference>
     <Reference Include="Bib3.RefNezDif">
       <HintPath>..\..\..\lib\Bib3.RefNezDif.dll</HintPath>
+    </Reference>
+    <Reference Include="BotEngine.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\BotEngine.Common.dll</HintPath>
     </Reference>
     <Reference Include="BotEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -136,6 +148,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="resource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -169,6 +185,10 @@
     <ProjectReference Include="..\Timon.UI\Timon.UI.csproj">
       <Project>{fa16c87b-e64a-4438-8ae0-1fd674829ab4}</Project>
       <Name>Timon.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timon\Timon.csproj">
+      <Project>{e2069384-252d-4e4b-87d8-fd6b8a7c52d8}</Project>
+      <Name>Timon</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

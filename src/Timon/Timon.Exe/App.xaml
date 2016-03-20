@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Timon.Exe"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="pack://application:,,,/Timon.Exe;component/resource.xaml"></ResourceDictionary>
     </Application.Resources>
 </Application>

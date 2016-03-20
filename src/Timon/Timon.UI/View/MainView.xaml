@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="Timon.UI.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Bib3.FCL.GBS="clr-namespace:Bib3.FCL.GBS;assembly=Bib3.FCL"
+             xmlns:BotEngine.UI.ViewModel="clr-namespace:BotEngine.UI.ViewModel;assembly=BotEngine.UI"
+             xmlns:BotSharp.UI.Wpf="clr-namespace:BotSharp.UI.Wpf;assembly=BotSharp.UI"
+             xmlns:Timon.UI="clr-namespace:Timon.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="444" d:DesignWidth="444">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Timon.UI;component/resource.xaml"></ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Grid
+                                    VerticalAlignment="Center"
+                                    Name="PanelMeasureDesiredHeight">
+                            <TextBlock Text="Bot"></TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="2" Height="{Binding ElementName=PanelMeasureDesiredHeight, Path=ActualHeight}">
+                            <Viewbox
+                                Stretch="Uniform" StretchDirection="Both"
+                                Margin="2,-1">
+                                <Bib3.FCL.GBS:ToggleButtonHorizBinär
+                                    x:Name="ToggleButtonMotionEnable"
+                                    x:FieldModifier="public">
+                                    <Bib3.FCL.GBS:ToggleButtonHorizBinär.ButtonLinxContent>
+                                        <TextBlock
+                                            Text="pause"
+                                            ToolTip="pause script execution by clicking here or by pressing Ctrl + Alt."></TextBlock>
+                                    </Bib3.FCL.GBS:ToggleButtonHorizBinär.ButtonLinxContent>
+                                    <Bib3.FCL.GBS:ToggleButtonHorizBinär.ButtonReczContent>
+                                        <TextBlock
+                                            Text="play"
+                                            ToolTip="resume script execution."></TextBlock>
+                                    </Bib3.FCL.GBS:ToggleButtonHorizBinär.ButtonReczContent>
+                                </Bib3.FCL.GBS:ToggleButtonHorizBinär>
+                            </Viewbox>
+                        </Grid>
+
+                        <Grid Width="3"></Grid>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <TabItem.Content>
+                    <BotSharp.UI.Wpf:IDE
+                        Name="ScriptIDE"
+                        x:FieldModifier="public"></BotSharp.UI.Wpf:IDE>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Config">
+                <Timon.UI:ConfigView
+                    x:Name="ConfigView"
+                    x:FieldModifier="public"></Timon.UI:ConfigView>
+            </TabItem>
+        </TabControl>
+
+
+    </Grid>
+</UserControl>
