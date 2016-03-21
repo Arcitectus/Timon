@@ -8,7 +8,8 @@
         xmlns:Timon.UI="clr-namespace:Timon.UI;assembly=Timon.UI"
         xmlns:local="clr-namespace:Timon.Exe"
         mc:Ignorable="d"
-        Title="Timon" Height="444" Width="525">
+        Title="{Binding RelativeSource={RelativeSource Self}, Path=TitleComputed, FallbackValue=Timon vXXXX}"
+        Height="444" Width="525">
     <Grid>
         <Timon.UI:MainView Name="MainView"></Timon.UI:MainView>
     </Grid>

@@ -25,6 +25,9 @@ namespace Timon.Exe
 
 		BotSharp.ScriptRun ScriptRun => ScriptIDE?.ScriptRun;
 
+		public string TitleComputed =>
+			"Timon v" + (TryFindResource("AppVersionId") ?? "");
+
 		void TimerConstruct()
 		{
 			Timer = new DispatcherTimer(TimeSpan.FromSeconds(1.0 / 10), DispatcherPriority.Normal, Timer_Tick, Dispatcher);
