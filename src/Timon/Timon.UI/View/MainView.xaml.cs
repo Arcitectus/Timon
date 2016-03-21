@@ -1,8 +1,12 @@
 ﻿using Bib3;
+using Bib3.RateLimit;
+using Bib3.Synchronization;
+using BotEngine;
 using BotEngine.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -26,6 +30,8 @@ namespace Timon.UI
 		}
 
 		readonly ConfigViewModel ConfigViewModel = new ConfigViewModel();
+
+		readonly object timerLock = new object();
 
 		DispatcherTimer Timer;
 
@@ -63,8 +69,32 @@ namespace Timon.UI
 				}
 			};
 
+		readonly IRateLimitStateInt configPersistRateLimit = new RateLimitStateIntSingle();
+
+		readonly PersistManager configPersistManager = new PersistManager
+		{
+			FilePath = ConfigFilePath,
+		};
+
+		public	Config Config
+		{
+			set
+			{
+				ConfigFromModelToView(value);
+			}
+
+			get
+			{
+				return ConfigReadFromUI();
+			}
+		}
+
 		void Setup()
 		{
+			Config =
+				(Bib3.Extension.ReturnValueOrException(() =>
+				(configPersistManager.ReadFromFileSerialized()?.DeserializeFromUtf8<Config>())) as Config).CompletedWithDefault();
+
 			ScriptIDE.ScriptRunGlobalsFunc = ToScriptGlobalsConstruct;
 
 			ScriptIDE.ScriptParamBase = new BotSharp.ScriptParam()
@@ -148,6 +178,18 @@ namespace Timon.UI
 		void Timer_Tick(object sender, object e)
 		{
 			UIPresent();
+
+			var config = Config;
+
+			Task.Run(() =>
+			{
+				new Action(() =>
+				{
+					if (configPersistRateLimit.AttemptPassStopwatchMilli(1000))
+						configPersistManager.ValueChanged(config.SerializeToUtf8());
+				})
+				.InvokeIfNotLocked(timerLock);
+			});
 		}
 
 	}
