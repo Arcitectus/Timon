@@ -13,11 +13,11 @@
             Columns="Auto,*"
             ChildMargin="1">
             <TextBlock Text="java path"></TextBlock>
-            <TextBox Text="{Binding JavaPath}"></TextBox>
+            <TextBox Text="{Binding Path=JavaPath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock Text="SMART path"></TextBlock>
-            <TextBox Text="{Binding SmartPath}"></TextBox>
+            <TextBox Text="{Binding Path=SmartPath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock Text="runescape path"></TextBlock>
-            <TextBox Text="{Binding RunescapePath}"></TextBox>
+            <TextBox Text="{Binding Path=RunescapePath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </WpfAutoGrid:AutoGrid>
     </Grid>
 </UserControl>
