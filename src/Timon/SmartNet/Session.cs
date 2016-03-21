@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using SmartNet.Native;
+using System.Runtime.InteropServices;
 
 namespace SmartNet
 {
-	public class Session
+	public class Session : ISmartSession
 	{
 		private static int sessionCount = 0;
 
@@ -73,5 +75,40 @@ namespace SmartNet
 			resetEvent.Set();
 			smartThread?.Join();
 		}
+
+		public KeyValuePair<uint[], int>? TakeScreenshot()
+		{
+			var arrayPtr = SmartRemote?.GetImageArray(SmartTargetHandle);
+
+			if (!arrayPtr.HasValue)
+				return null;
+
+			var width = Width;
+
+			var array = new Int32[width * Height];
+
+			Marshal.Copy(arrayPtr.Value, array, 0, array.Length);
+
+			//	set each pixel to max. opacity
+			for (int i = 0; i < array.Length; i++)
+				array[i] = array[i] | (0xff << 24);
+
+			return new KeyValuePair<UInt32[], int>((UInt32[])(object)array, width);
+		}
+
+		public void MouseClick(int x, int y, bool left) =>
+			SmartRemote?.ClickMouse(SmartTargetHandle, x, y, left);
+
+		public void MouseMove(int x, int y) =>
+			SmartRemote?.MoveMouse(SmartTargetHandle, x, y);
+
+		public void TextEntry(string text, int keyWait, int keyModWait) =>
+			SmartRemote?.SendKeys(SmartTargetHandle, text, keyWait, keyModWait);
+
+		public void KeyDown(int code) =>
+			SmartRemote?.HoldKey(SmartTargetHandle, code);
+
+		public void KeyUp(int code) =>
+			SmartRemote?.ReleaseKey(SmartTargetHandle, code);
 	}
 }
