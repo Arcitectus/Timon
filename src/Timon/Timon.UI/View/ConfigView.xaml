@@ -18,6 +18,8 @@
             <TextBox Text="{Binding Path=SmartPath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock Text="runescape path"></TextBlock>
             <TextBox Text="{Binding Path=RunescapePath, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Text="SMART stop on script end"></TextBlock>
+            <CheckBox IsChecked="{Binding Path=SmartSessionStopOnScriptEnd, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
         </WpfAutoGrid:AutoGrid>
     </Grid>
 </UserControl>

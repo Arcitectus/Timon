@@ -15,7 +15,7 @@ namespace Timon.Script.Impl
 		public ISmartSession SmartSession => SmartSessionDelegate?.Invoke();
 	}
 
-	public class ToScriptGlobals : BotSharp.ScriptRun.ToScriptGlobals
+	public class ToScriptGlobals : BotSharp.ScriptRun.ScriptRun.ToScriptGlobals
 	{
 		public IHostToScript Timon;
 	}

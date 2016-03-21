@@ -34,9 +34,9 @@ namespace SmartNet
 			resetEvent = new ManualResetEvent(false);
 		}
 
-		private void StartSmart(SessionSettings settings)
+		public void Start()
 		{
-			string url = settings.SessionType == SessionType.RS3 ? "http://world37.runescape.com/" : "http://oldschool81.runescape.com/";
+			string url = settings.RunescapePath;
 
 			int availableClients = SmartRemote.GetClients(true);
 
@@ -53,27 +53,13 @@ namespace SmartNet
 
 			if (SmartTargetHandle == IntPtr.Zero)
 				SmartTargetHandle = SmartRemote.SpawnClient(settings.JavaPath, settings.SmartPath, url, "", Width, Height, null, null, null, null);
-
-			resetEvent.WaitOne();
-
-			SmartRemote.KillClient(SmartRemote.GetClientPID(SmartTargetHandle));
-
-			SmartTargetHandle = IntPtr.Zero;
-		}
-
-		public void Start()
-		{
-			smartThread = new Thread(() => StartSmart(settings));
-			Interlocked.Increment(ref sessionCount);
-			smartThread.Name = $"SessionThread-{sessionCount}";
-			smartThread.IsBackground = true;
-			smartThread.Start();
 		}
 
 		public void Stop()
 		{
-			resetEvent.Set();
-			smartThread?.Join();
+			SmartRemote.KillClient(SmartRemote.GetClientPID(SmartTargetHandle));
+
+			SmartTargetHandle = IntPtr.Zero;
 		}
 
 		public KeyValuePair<uint[], int>? TakeScreenshot()
@@ -81,6 +67,9 @@ namespace SmartNet
 			var arrayPtr = SmartRemote?.GetImageArray(SmartTargetHandle);
 
 			if (!arrayPtr.HasValue)
+				return null;
+
+			if (IntPtr.Zero == arrayPtr)
 				return null;
 
 			var width = Width;

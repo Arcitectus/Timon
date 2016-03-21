@@ -73,6 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RasterImagePatternMatch.cs" />
     <Compile Include="Script\IHostToScript.cs" />
+    <Compile Include="Script\ScriptRunClient.cs" />
     <Compile Include="Script\ToScriptExtension.cs" />
     <Compile Include="Script\ToScriptImport.cs" />
   </ItemGroup>

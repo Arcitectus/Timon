@@ -35,7 +35,7 @@ namespace Timon.UI
 
 		DispatcherTimer Timer;
 
-		BotSharp.ScriptRun ScriptRun => ScriptIDE?.ScriptRun;
+		BotSharp.ScriptRun.ScriptRun ScriptRun => ScriptIDE?.ScriptRun;
 
 		static public Func<string> AssemblyDirectoryPathDelegate;
 
@@ -61,14 +61,6 @@ namespace Timon.UI
 		public void ConfigFromModelToView(Config config) =>
 			ConfigViewModel.PropagateFromClrMemberToDependencyProperty(config);
 
-		Script.Impl.ToScriptGlobals ToScriptGlobalsConstruct(Action ScriptExecutionCheck) =>
-			new Script.Impl.ToScriptGlobals()
-			{
-				Timon = new Script.Impl.HostToScriptDelegate
-				{
-				}
-			};
-
 		readonly IRateLimitStateInt configPersistRateLimit = new RateLimitStateIntSingle();
 
 		readonly PersistManager configPersistManager = new PersistManager
@@ -76,7 +68,9 @@ namespace Timon.UI
 			FilePath = ConfigFilePath,
 		};
 
-		public	Config Config
+		Config ConfigCache;
+
+		public Config ConfigInUI
 		{
 			set
 			{
@@ -89,34 +83,48 @@ namespace Timon.UI
 			}
 		}
 
+		ScriptRunConfig ScriptRunConfig =>
+			new ScriptRunConfig
+			{
+				SmartConfig = new SmartNet.SessionSettings
+				{
+					SmartPath = ConfigCache?.SmartPath,
+					JavaPath = ConfigCache?.JavaPath,
+					RunescapePath = ConfigCache?.RunescapePath,
+				},
+
+				SmartSessionStopOnScriptEnd = ConfigCache?.SmartSessionStopOnScriptEnd ?? false,
+			};
+
+		BotSharp.ScriptRun.IScriptRunClient ScriptRunClientBuild(BotSharp.ScriptRun.ScriptRun run)
+		{
+			var config = this.ConfigInUI;
+
+			return new Script.Impl.ScriptRunClient(run, () => ScriptRunConfig);
+		}
+
 		void Setup()
 		{
-			Config =
+			ConfigInUI =
 				(Bib3.Extension.ReturnValueOrException(() =>
 				(configPersistManager.ReadFromFileSerialized()?.DeserializeFromUtf8<Config>())) as Config).CompletedWithDefault();
 
-			ScriptIDE.ScriptRunGlobalsFunc = ToScriptGlobalsConstruct;
-
-			ScriptIDE.ScriptParamBase = new BotSharp.ScriptParam()
+			ScriptIDE.ScriptParamBase = new BotSharp.ScriptParam
 			{
 				ImportAssembly = Script.Impl.ToScriptImport.ImportAssembly?.ToArray(),
 				ImportNamespace = Script.Impl.ToScriptImport.ImportNamespace?.ToArray(),
-				CompilationOption = new BotSharp.CodeAnalysis.CompilationOption()
+				CompilationOption = new BotSharp.CodeAnalysis.CompilationOption
 				{
 					InstrumentationOption = BotSharp.CodeAnalysis.Default.InstrumentationOption,
 				},
-				PreRunCallback = new Action<BotSharp.ScriptRun>(ScriptRun =>
-				{
-					ScriptRun.InstrumentationCallbackSynchronousFirstTime = new Action<BotSharp.SourceLocation>(ScriptSourceLocation =>
-					{
-						//	make sure script runs on same culture independend of host culture.
-						System.Threading.Thread.CurrentThread.CurrentCulture = Script.Impl.ToScriptImport.ScriptDefaultCulture;
-					});
-				}),
+
+				CompilationGlobalsType = ScriptRunClientBuild(null)?.ToScriptGlobals?.GetType(),
+
+				ScriptRunClientBuildDelegate = ScriptRunClientBuild,
 			};
 
 			ScriptIDE.ChooseScriptFromIncludedScripts.SetScript =
-				ListScriptIncluded?.Select(ScriptIdAndContent => new KeyValuePair<string, Func<string>>(ScriptIdAndContent.Key, () => ScriptIdAndContent.Value))?.ToArray();
+					ListScriptIncluded?.Select(ScriptIdAndContent => new KeyValuePair<string, Func<string>>(ScriptIdAndContent.Key, () => ScriptIdAndContent.Value))?.ToArray();
 
 			ScriptIDE.ScriptWriteToOrReadFromFile.DefaultFilePath = DefaultScriptPath;
 			ScriptIDE.ScriptWriteToOrReadFromFile?.ReadFromFile();
@@ -179,14 +187,14 @@ namespace Timon.UI
 		{
 			UIPresent();
 
-			var config = Config;
+			ConfigCache = ConfigInUI;
 
 			Task.Run(() =>
 			{
 				new Action(() =>
 				{
 					if (configPersistRateLimit.AttemptPassStopwatchMilli(1000))
-						configPersistManager.ValueChanged(config.SerializeToUtf8());
+						configPersistManager.ValueChanged(ConfigCache.SerializeToUtf8());
 				})
 				.InvokeIfNotLocked(timerLock);
 			});

@@ -114,6 +114,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SmartNet\SmartNet.csproj">
+      <Project>{5c5da07d-5223-4962-9721-a10aa867b660}</Project>
+      <Name>SmartNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Timon\Timon.csproj">
       <Project>{e2069384-252d-4e4b-87d8-fd6b8a7c52d8}</Project>
       <Name>Timon</Name>

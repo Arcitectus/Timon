@@ -6,6 +6,15 @@
 
 		public string SmartPath { set; get; }
 
-		public	string RunescapePath { set; get; }
+		public string RunescapePath { set; get; }
+
+		public bool SmartSessionStopOnScriptEnd;
+	}
+
+	public class ScriptRunConfig
+	{
+		public SmartNet.SessionSettings SmartConfig;
+
+		public bool SmartSessionStopOnScriptEnd;
 	}
 }

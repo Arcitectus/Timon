@@ -6,6 +6,6 @@
 
 		public string SmartPath { get; set; }
 
-		public SessionType SessionType { get; set; }
+		public string RunescapePath { get; set; }
 	}
 }
