@@ -9,7 +9,7 @@ namespace SmartNet
 
 		int Height { get; }
 
-		KeyValuePair<UInt32[], int>? TakeScreenshot();
+		KeyValuePair<UInt32[], int>? TakeImageRasterFromRectOffsetAndLength(int offsetX, int offsetY, int width, int height);
 
 		void MouseClick(int x, int y, bool left);
 

@@ -7,7 +7,7 @@ namespace Timon
 {
 	static public class RasterImagePatternMatch
 	{
-		static public IEnumerable<Vektor2DInt> SubsetInRect(this IEnumerable<Vektor2DInt> source, RectInt rect) =>
+		static public IEnumerable<Vektor2DInt> SubsetFromRect(this IEnumerable<Vektor2DInt> source, RectInt rect) =>
 			source?.Where(point => rect.ContainsPointForMinInclusiveAndMaxExclusive(point));
 
 		static public Vektor2DInt RasterLengthVektor(this KeyValuePair<UInt32[], int> raster) =>
@@ -40,7 +40,7 @@ namespace Timon
 			Func<KeyValuePair<UInt32[], int>, int, int, bool> perOffsetPredicate) =>
 			FindSetMatchInRegion(rasterToSearch, perOffsetPredicate, new RectInt(0, 0, rasterToSearch.RasterLengthVektor().A, rasterToSearch.RasterLengthVektor().B));
 
-		static public Func<KeyValuePair<UInt32[], int>, int, int, bool> PatternFromRasterPredicate(
+		static public Func<KeyValuePair<UInt32[], int>, int, int, bool> RasterMatchAtOffsetPredicateBinary(
 			this KeyValuePair<UInt32[], int> patternRaster,
 			int tolerancePerPixel) =>
 			new Func<KeyValuePair<uint[], int>, int, int, bool>((rasterToSearch, searchOffsetA, searchOffsetB) =>
@@ -90,7 +90,7 @@ namespace Timon
 				return true;
 			});
 
-		static public Func<KeyValuePair<UInt32[], int>, int, int, bool> FindColorPredicate(
+		static public Func<KeyValuePair<UInt32[], int>, int, int, bool> ColorAtOffsetPredicateBinary(
 			int colorR, int colorG, int colorB, int tolerance) =>
 			new Func<KeyValuePair<uint[], int>, int, int, bool>((rasterToSearch, searchOffsetA, searchOffsetB) =>
 			{
@@ -114,7 +114,7 @@ namespace Timon
 					tolerance < Math.Abs(diffB));
 			});
 
-		static public Func<KeyValuePair<UInt32[], int>, int, int, bool> HealthBarPredicate(
+		static public Func<KeyValuePair<UInt32[], int>, int, int, bool> HealthBarAtOffsetPredicateBinary(
 			int requiredLengthA = 28,
 			int requiredLengthB = 5) =>
 			new Func<KeyValuePair<uint[], int>, int, int, bool>((rasterToSearch, searchOffsetA, searchOffsetB) =>

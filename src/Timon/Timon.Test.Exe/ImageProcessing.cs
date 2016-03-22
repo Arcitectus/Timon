@@ -18,7 +18,7 @@ namespace Timon.Test.Exe
 				UInt32.MaxValue,
 			}.AsRaster2D(1);
 
-			var predicate = raster.PatternFromRasterPredicate(0);
+			var predicate = raster.RasterMatchAtOffsetPredicateBinary(0);
 
 			var setMatch = raster.FindSetMatch(predicate)?.ToArray();
 
@@ -34,7 +34,7 @@ namespace Timon.Test.Exe
 				0x00000000, 0xff0000f0
 			}.AsRaster2D(2);
 
-			var predicate = RasterImagePatternMatch.FindColorPredicate(1, 4, 0xf8, 10);
+			var predicate = RasterImagePatternMatch.ColorAtOffsetPredicateBinary(1, 4, 0xf8, 10);
 
 			var setMatch = raster.FindSetMatch(predicate)?.ToArray();
 
