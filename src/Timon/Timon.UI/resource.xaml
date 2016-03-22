@@ -10,7 +10,7 @@
 
         <ResourceDictionary>
 
-            <system:String x:Key="AppVersionId">16.02.19</system:String>
+            <system:String x:Key="AppVersionId">16.02.21</system:String>
 
             <BotEngine.UI.ViewModel:AppProperty
                 x:Key="AppProperty">
